@@ -316,6 +316,9 @@ public class AppsflyerSdkPlugin implements MethodCallHandler, FlutterPlugin, Act
             case "addPushNotificationDeepLinkPath":
                 addPushNotificationDeepLinkPath(call, result);
                 break;
+            case "getPlatformVersion":
+                result.success("Android " + android.os.Build.VERSION.RELEASE);
+                break;
             default:
                 result.notImplemented();
                 break;

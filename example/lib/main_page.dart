@@ -64,37 +64,46 @@ class MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Column(
-            children: <Widget>[
-              Text('AppsFlyer SDK example app'),
-              FutureBuilder<String>(
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                return Text(snapshot.hasData ? snapshot.data : "");
-              }),
-            ],
-          ),
+      appBar: AppBar(
+        title: Column(
+          children: <Widget>[
+            Text('AppsFlyer SDK example app'),
+            FutureBuilder<String>(
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+              return Text(snapshot.hasData ? snapshot.data : "");
+            }),
+          ],
         ),
-        body: FutureBuilder<dynamic>(
-            future: _appsflyerSdk.initSdk(
-                registerConversionDataCallback: true,
-                registerOnAppOpenAttributionCallback: false,
-                registerOnDeepLinkingCallback: true),
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
-              } else {
-                if (snapshot.hasData) {
-                  return HomeContainer(
-                    onData: _gcd,
-                    deepLinkData: _deepLinkData,
-                    logEvent: logEvent,
-                  );
-                } else {
-                  return Center(child: Text("Error initializing sdk"));
-                }
-              }
-            }));
+      ),
+      body: FutureBuilder<dynamic>(
+        future: _appsflyerSdk.getPlatformVersion(),
+        builder: (context, snapshot) {
+          return Center(
+            child: Text(snapshot.data ?? ''),
+          );
+        },
+      ),
+      // body: FutureBuilder<dynamic>(
+      //     future: _appsflyerSdk.initSdk(
+      //         registerConversionDataCallback: true,
+      //         registerOnAppOpenAttributionCallback: false,
+      //         registerOnDeepLinkingCallback: true),
+      //     builder: (BuildContext context, AsyncSnapshot snapshot) {
+      //       if (snapshot.connectionState == ConnectionState.waiting) {
+      //         return Center(child: CircularProgressIndicator());
+      //       } else {
+      //         if (snapshot.hasData) {
+      //           return HomeContainer(
+      //             onData: _gcd,
+      //             deepLinkData: _deepLinkData,
+      //             logEvent: logEvent,
+      //           );
+      //         } else {
+      //           return Center(child: Text("Error initializing sdk"));
+      //         }
+      //       }
+      //     }),
+    );
   }
 
   Future<bool> logEvent(String eventName, Map eventValues) {

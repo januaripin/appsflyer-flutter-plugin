@@ -288,7 +288,8 @@ class AppsflyerSdk {
 
   ///Adds array of keys, which are used to compose key path to resolve deeplink from push notification payload.
   void addPushNotificationDeepLinkPath(List<String> deeplinkPath) {
-    _methodChannel.invokeMethod("addPushNotificationDeepLinkPath", deeplinkPath);
+    _methodChannel.invokeMethod(
+        "addPushNotificationDeepLinkPath", deeplinkPath);
   }
 
   Future<dynamic> validateAndLogInAppAndroidPurchase(
@@ -472,5 +473,9 @@ class AppsflyerSdk {
 
   void setDisableNetworkData(bool disable) {
     _methodChannel.invokeMethod("setDisableNetworkData", disable);
+  }
+
+  Future<String?> getPlatformVersion() {
+    return AppsflyerSdkPlatform.instance.getPlatformVersion();
   }
 }

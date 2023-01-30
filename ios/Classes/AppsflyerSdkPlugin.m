@@ -141,6 +141,8 @@ static BOOL _isSKADEnabled = false;
         [self setResolveDeepLinkURLs:call result:result];
     }else if([@"addPushNotificationDeepLinkPath" isEqualToString:call.method]){
         [self addPushNotificationDeepLinkPath:call result:result];
+    }else if([@"getPlatformVersion" isEqualToString:call.method]){
+        result([@"iOS " stringByAppendingString:[[UIDevice currentDevice] systemVersion]]);
     }
     else{
         result(FlutterMethodNotImplemented);

@@ -257,11 +257,12 @@ void main() {
       expect(selectedMethod, 'setCustomerUserId');
     });
 
-    test('check enableLocationCollection call', () async {
-      instance.enableLocationCollection(false);
+    /// enableLocationCollection is not define 
+    //test('check enableLocationCollection call', () async {
+    //   instance.enableLocationCollection(false);
 
-      expect(selectedMethod, 'enableLocationCollection');
-    });
+    //   expect(selectedMethod, 'enableLocationCollection');
+    // });
 
     test('check setImeiData call', () async {
       instance.setImeiData("imei");

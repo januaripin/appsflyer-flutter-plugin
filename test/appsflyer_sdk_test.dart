@@ -14,8 +14,7 @@ void main() {
 
   setUp(() {
     //test map options way
-    instance = AppsflyerSdk.private(methodChannel, eventChannel,
-        mapOptions: {'afDevKey': 'sdfhj2342cx'});
+    instance = AppsflyerSdk.private(mapOptions: {'afDevKey': 'sdfhj2342cx'});
 
     methodChannel.setMockMethodCallHandler((methodCall) async {
       String method = methodCall.method;
@@ -34,10 +33,9 @@ void main() {
 
   test('check initSdk call', () async {
     await instance.initSdk(
-      registerConversionDataCallback: true,
-      registerOnAppOpenAttributionCallback: true,
-      registerOnDeepLinkingCallback: false
-    );
+        registerConversionDataCallback: true,
+        registerOnAppOpenAttributionCallback: true,
+        registerOnDeepLinkingCallback: false);
 
     expect('initSdk', selectedMethod);
   });
@@ -45,8 +43,7 @@ void main() {
   group('AppsFlyerSdk', () {
     setUp(() {
       //test map options way
-      instance = AppsflyerSdk.private(methodChannel, eventChannel,
-          mapOptions: {'afDevKey': 'sdfhj2342cx'});
+      instance = AppsflyerSdk.private(mapOptions: {'afDevKey': 'sdfhj2342cx'});
 
       callbacksChannel.setMockMethodCallHandler((call) async {
         String method = call.method;
@@ -227,10 +224,10 @@ void main() {
       expect(selectedMethod, 'setCollectAndroidId');
     });
 
-    test('check setUserEmailsWithCryptType call', () async {
+    test('check setUserEmails call', () async {
       instance.setUserEmails(["emails"], EmailCryptType.EmailCryptTypeNone);
 
-      expect(selectedMethod, 'setUserEmailsWithCryptType');
+      expect(selectedMethod, 'setUserEmails');
     });
 
     test('check setUserEmails call', () async {
@@ -256,13 +253,6 @@ void main() {
 
       expect(selectedMethod, 'setCustomerUserId');
     });
-
-    /// enableLocationCollection is not define 
-    //test('check enableLocationCollection call', () async {
-    //   instance.enableLocationCollection(false);
-
-    //   expect(selectedMethod, 'enableLocationCollection');
-    // });
 
     test('check setImeiData call', () async {
       instance.setImeiData("imei");

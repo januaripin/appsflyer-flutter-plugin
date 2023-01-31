@@ -76,33 +76,27 @@ class MainPageState extends State<MainPage> {
         ),
       ),
       body: FutureBuilder<dynamic>(
-        future: _appsflyerSdk.getPlatformVersion(),
-        builder: (context, snapshot) {
-          return Center(
-            child: Text(snapshot.data ?? ''),
-          );
+        future: _appsflyerSdk.initSdk(
+          registerConversionDataCallback: true,
+          registerOnAppOpenAttributionCallback: false,
+          registerOnDeepLinkingCallback: true,
+        ),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else {
+            if (snapshot.hasData) {
+              return HomeContainer(
+                onData: _gcd,
+                deepLinkData: _deepLinkData,
+                logEvent: logEvent,
+              );
+            } else {
+              return Center(child: Text("Error initializing sdk"));
+            }
+          }
         },
       ),
-      // body: FutureBuilder<dynamic>(
-      //     future: _appsflyerSdk.initSdk(
-      //         registerConversionDataCallback: true,
-      //         registerOnAppOpenAttributionCallback: false,
-      //         registerOnDeepLinkingCallback: true),
-      //     builder: (BuildContext context, AsyncSnapshot snapshot) {
-      //       if (snapshot.connectionState == ConnectionState.waiting) {
-      //         return Center(child: CircularProgressIndicator());
-      //       } else {
-      //         if (snapshot.hasData) {
-      //           return HomeContainer(
-      //             onData: _gcd,
-      //             deepLinkData: _deepLinkData,
-      //             logEvent: logEvent,
-      //           );
-      //         } else {
-      //           return Center(child: Text("Error initializing sdk"));
-      //         }
-      //       }
-      //     }),
     );
   }
 

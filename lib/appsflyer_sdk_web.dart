@@ -3,6 +3,7 @@
 // package as the core of your plugin.
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html show window;
+import 'dart:js' as js;
 import 'package:flutter/foundation.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'appsflyer_sdk.dart';
@@ -20,6 +21,13 @@ class AppsflyerSdkWeb extends AppsflyerSdkPlatform {
   @override
   Future<String?> getPlatformVersion() async {
     return html.window.navigator.userAgent;
+  }
+
+  @override
+  Future<bool?> logEvent(String eventName, Map? eventValues) async {
+    js.context.callMethod('logEvent', [eventName, js.JsObject.jsify(eventValues ?? {})]);
+
+    return null;
   }
 
   @override
@@ -120,14 +128,6 @@ class AppsflyerSdkWeb extends AppsflyerSdkPlatform {
     debugPrint(
       'logCrossPromotionImpression has not supported for web platform',
     );
-  }
-
-  @override
-  Future<bool?> logEvent(String eventName, Map? eventValues) async {
-    debugPrint('logEvent has not supported for web platform');
-
-    // TODO: check if logEvent is eligible to support web platform
-    return null;
   }
 
   @override
